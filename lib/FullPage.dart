@@ -1,7 +1,27 @@
 
 import 'package:flutter/material.dart';
+import 'package:notes_ui/db_helper.dart';
 
-class Fullpage extends StatelessWidget{
+class Fullpage extends StatefulWidget{
+  @override
+  State<Fullpage> createState() => _FullpageState();
+}
+
+class _FullpageState extends State<Fullpage> {
+  DbHelper dbHelper = DbHelper.getInstance();
+  List<Map<String, dynamic>> mData = [];
+  @override
+  void initState() {
+    super.initState();
+    getNotes();
+  }
+
+  void getNotes() async{
+    mData = await dbHelper.fetchAllNote();
+    setState(() {
+
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,16 +33,20 @@ class Fullpage extends StatelessWidget{
           SizedBox(height: 30,),
              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
+                  InkWell(onTap: (){
+                    Navigator.pop(context);
+                  },
+                    child: Container(
 
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(11),
-                        color: Colors.white38
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(11),
+                          color: Colors.white38
+                      ),
+                      child: Icon(Icons.arrow_back_ios_new_rounded,
+                        color: Colors.white70,size: 20,),
                     ),
-                    child: Icon(Icons.arrow_back_ios_new_rounded,
-                      color: Colors.white70,size: 20,),
                   ),
                   Container(
 
@@ -38,11 +62,12 @@ class Fullpage extends StatelessWidget{
                 ],
              ),
           SizedBox(height: 25,),
-          Text('Beautiful weather app UI concepts we wish existed',
+          Text("discrip",
             style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.w500,
-              color: Colors.white
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w500
+
             ),),
           SizedBox(height: 25,),
           Text('Mar 18,2020',style: TextStyle(
@@ -81,5 +106,5 @@ class Fullpage extends StatelessWidget{
     );
 
     }
-    }
+}
 
